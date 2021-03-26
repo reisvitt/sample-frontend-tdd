@@ -46,7 +46,7 @@ describe('RemoteAuthentication', () => {
     await expect(promise).rejects.toThrow(new UnexpectedError());
   });
 
-  test('Should throw UnexpectedError if HttpPostClient return 401', async () => {
+  test('Should throw InvalidCredentialsError if HttpPostClient return 401', async () => {
     const {sut, httpPostClienteSpy } = makeSut();
     httpPostClienteSpy.response = {
       statusCode: HttpStatusCode.unauthorizad
@@ -55,5 +55,15 @@ describe('RemoteAuthentication', () => {
 
     const promise = sut.auth(mockAuthentication());
     await expect(promise).rejects.toThrow(new InvalidCredentialError());
+  });
+
+  test('Should throw UnexpectedError if HttpPostClient return 404', async () => {
+    const {sut, httpPostClienteSpy } = makeSut();
+    httpPostClienteSpy.response = {
+      statusCode: HttpStatusCode.notFound
+    }
+
+    const promise = sut.auth(mockAuthentication());
+    await expect(promise).rejects.toThrow(new UnexpectedError());
   });
 });
