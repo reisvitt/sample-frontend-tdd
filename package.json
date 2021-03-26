@@ -20,7 +20,15 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --runInBand --no-cache",
+    "test:ci": "yarn test --watchAll=false --coverage",
     "eject": "react-scripts eject"
+  },
+  "jest":{
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.{ts, tsx}",
+      "!**/*.d.ts",
+      "!<rootDir>/src/**/index.ts"
+    ]
   },
   "eslintConfig": {
     "extends": [
