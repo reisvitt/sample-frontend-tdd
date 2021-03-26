@@ -1,7 +1,9 @@
 import faker from 'faker';
+import { UnexpectedError } from '../../../domain/errors/unexpected-error';
 import { AccountModel } from '../../../domain/models/account-model';
 import { mockAuthentication } from '../../../domain/test/mock-account';
 import {  AuthenticationParams } from '../../../domain/usercases/authentication';
+import { HttpStatusCode } from '../../protocols/http/http-response';
 import { HttpPostClientSpy } from '../../test/mock-http-post-client';
 import { RemoteAuthentication } from "./remote-athentication";
 
@@ -15,8 +17,6 @@ const makeSut = (url: string = faker.internet.url()): SutTypes => {
   const sut = new RemoteAuthentication(url, httpPostClienteSpy);
   return {sut, httpPostClienteSpy}
 }
-
-
 
 describe('RemoteAuthentication', () => {
   test('Should call HttpPostClient with correct URL', async () => {
@@ -32,5 +32,16 @@ describe('RemoteAuthentication', () => {
     const authenticationParams = mockAuthentication();
     await sut.auth(authenticationParams);
     expect(httpPostClienteSpy.body).toBe(authenticationParams);
+  });
+
+  test('Should throw UnexpectedError if HttpPostClient return 400', async () => {
+    const {sut, httpPostClienteSpy } = makeSut();
+    httpPostClienteSpy.response = {
+      statusCode: HttpStatusCode.badRequest
+    }
+
+
+    const promise = sut.auth(mockAuthentication());
+    await expect(promise).rejects.toThrow(new UnexpectedError());
   });
 });
