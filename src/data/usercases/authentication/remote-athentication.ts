@@ -20,6 +20,7 @@ export class RemoteAuthentication implements Authentication {
       case HttpStatusCode.ok: return { accessToken: '' }
       case HttpStatusCode.badRequest: throw new UnexpectedError()
       case HttpStatusCode.unauthorizad: throw new InvalidCredentialError()
+      case HttpStatusCode.serverError: throw new UnexpectedError()
       default: throw new UnexpectedError()
     }
   }
