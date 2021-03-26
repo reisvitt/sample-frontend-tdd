@@ -1,4 +1,5 @@
 import faker from 'faker';
+import { InvalidCredentialError } from '../../../domain/errors/invalid-credentials-error';
 import { UnexpectedError } from '../../../domain/errors/unexpected-error';
 import { AccountModel } from '../../../domain/models/account-model';
 import { mockAuthentication } from '../../../domain/test/mock-account';
@@ -43,5 +44,16 @@ describe('RemoteAuthentication', () => {
 
     const promise = sut.auth(mockAuthentication());
     await expect(promise).rejects.toThrow(new UnexpectedError());
+  });
+
+  test('Should throw UnexpectedError if HttpPostClient return 401', async () => {
+    const {sut, httpPostClienteSpy } = makeSut();
+    httpPostClienteSpy.response = {
+      statusCode: HttpStatusCode.unauthorizad
+    }
+
+
+    const promise = sut.auth(mockAuthentication());
+    await expect(promise).rejects.toThrow(new InvalidCredentialError());
   });
 });
