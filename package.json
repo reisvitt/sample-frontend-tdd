@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.21.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -15,7 +16,7 @@
     "test:ci": "yarn test --watchAll=false --coverage",
     "eject": "react-scripts eject"
   },
-  "jest":{
+  "jest": {
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.{ts, tsx}",
       "!**/*.d.ts",
@@ -41,15 +42,16 @@
     ]
   },
   "devDependencies": {
-    "@types/faker": "^5.1.7",
-    "faker": "^5.5.0",
+    "@types/axios": "^0.14.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@types/faker": "^5.1.7",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "faker": "^5.5.0",
     "typescript": "^4.1.2"
   }
 }
