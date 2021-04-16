@@ -1,10 +1,10 @@
 endpoint: /api/signup
 POST
 data: {
-"name": "Marcos",
-"email": "m4rcos.azevedo@gmail.com",
-"password": "123456",
-"passwordConfirmation": "123456"
+"name": "",
+"email": "",
+"password": "",
+"passwordConfirmation": ""
 }
 
 LOGIN: /api/login
